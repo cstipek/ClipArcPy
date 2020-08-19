@@ -1,0 +1,20 @@
+#Import the python library for Arcgis Pro
+import arcpy
+
+#import wa_cities layer (wherever you have it housed)
+wa_cities = (r'C:\Users\stipecl\Desktop\Data\City\WA_Cities\tl_2014_53_place.shp')
+
+#Copy Pacific County out of the shpfile and then export it to a new layer
+arcpy.management.CopyFeatures("WA_County_Boundaries", r"C:\Users\stipecl\Desktop\GitHub Script\GitHub_Python\GitHub_Python.gdb\Pacific_County", None, None, None, None)
+
+#Clip all the cities within Pacific County
+arcpy.analysis.Clip("wa_cities", "Pacific_County", r"C:\Users\stipecl\Desktop\GitHub Script\GitHub_Python\GitHub_Python.gdb\Pacific_County_Cities", None)
+
+#Get the count for all of the cities within the county
+numFeats = arcpy.GetCount_management(Pacific_County_Cities)
+
+#To print out how many features within the file there are
+print("""{0} has {1} feature's""".format(Pacific_County,numFeats)
+
+
+print("Script Completed!")
